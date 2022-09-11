@@ -42,7 +42,17 @@ const updateProduct = async (req, res) => {
   }
 };
 
+const deleteProduct = async (req, res) => {
+  try {
+    await ProductSchema.findByIdAndDelete(req.params.id);
+    res.status(200).json({ msg: "Product deleted successfully." });
+  } catch (err) {
+    return res.status(500).json({ msg: err.message });
+  }
+};
+
 module.exports = {
   createProduct,
   updateProduct,
+  deleteProduct,
 };
