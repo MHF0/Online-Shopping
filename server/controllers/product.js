@@ -51,8 +51,18 @@ const deleteProduct = async (req, res) => {
   }
 };
 
+const getAllProducts = async (req, res) => {
+  try {
+    const products = await ProductSchema.find();
+    res.status(200).json({ products });
+  } catch (err) {
+    return res.status(500).json({ msg: err.message });
+  }
+};
+
 module.exports = {
   createProduct,
   updateProduct,
   deleteProduct,
+  getAllProducts,
 };
