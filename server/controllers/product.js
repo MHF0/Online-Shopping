@@ -23,6 +23,26 @@ const createProduct = async (req, res) => {
   }
 };
 
+const updateProduct = async (req, res) => {
+  try {
+    const { name, price, description, image, category } = req.body;
+    await ProductSchema.findOneAndUpdate(
+      { _id: req.params.id },
+      {
+        name,
+        price,
+        description,
+        image,
+        category,
+      }
+    );
+    res.status(200).json({ msg: "Product updated successfully." });
+  } catch (err) {
+    return res.status(500).json({ msg: err.message });
+  }
+};
+
 module.exports = {
   createProduct,
+  updateProduct,
 };
