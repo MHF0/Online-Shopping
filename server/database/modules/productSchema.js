@@ -27,11 +27,6 @@ const ProductSchema = new mongoose.Schema({
     required: true,
     trim: true,
   },
-  countInStock: {
-    type: Number,
-    required: true,
-    trim: true,
-  },
   comments: [{ type: mongoose.Schema.Types.ObjectId, ref: "Comment" }],
   whoCreated: {
     type: mongoose.Schema.Types.ObjectId,

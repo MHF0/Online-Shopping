@@ -17,7 +17,7 @@ const createProduct = async (req, res) => {
       whoCreated: userId,
     });
     await newProduct.save();
-    res.status(200).json({ msg: "Product created successfully." });
+    res.status(200).json({ msg: "Product created successfully.", newProduct });
   } catch (err) {
     return res.status(500).json({ msg: err.message });
   }

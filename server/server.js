@@ -5,6 +5,7 @@ const app = express();
 require("dotenv").config();
 const connectDB = require("./database/db");
 const userRouter = require("./routes/user");
+const productRouter = require("./routes/product");
 
 // Connect to database
 connectDB();
@@ -15,6 +16,7 @@ app.use(express.json());
 
 // Routes
 app.use("/api", userRouter);
+app.use("/api/product", productRouter);
 
 const PORT = process.env.PORT || 5000;
 

@@ -8,10 +8,11 @@ const authCheck = (req, res, next) => {
   }
   const token = req.headers.authorization.split(" ").pop();
   if (token) {
-    jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+    jwt.verify(token, process.env.TOKEN_SECRET, (err, decoded) => {
       if (err) {
         return res.status(401).json({
           message: "Invalid token",
+          err,
         });
       } else {
         req.user = decoded;
