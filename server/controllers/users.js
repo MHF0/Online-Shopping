@@ -1,11 +1,13 @@
 const UserSchema = require("../database/modules/userSchema");
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
 
-const register = async (req, res) => {
+const register = async (req, res, next) => {
   try {
     const { name, email, password } = req.body;
     const user = await UserSchema.findOne({ email });
     if (user) {
-      return res.status(400).json({ msg: "The user already exists." });
+      return res.status(400).json({ msg: "User already exists." });
     }
     const newUser = new UserSchema({
       name,
@@ -13,7 +15,28 @@ const register = async (req, res) => {
       password,
     });
     await newUser.save();
-    res.status(201).json({ msg: "Register Success!" });
+    next();
+  } catch (err) {
+    return res.status(500).json({ msg: err.message });
+  }
+};
+
+const login = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    const user = await UserSchema.findOne({ email });
+    if (!user) {
+      return res.status(400).json({ msg: "User does not exist." });
+    }
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      return res.status(400).json({ msg: "Incorrect password." });
+    }
+    const payload = { id: user._id };
+    const token = jwt.sign(payload, process.env.TOKEN_SECRET, {
+      expiresIn: "1d",
+    });
+    res.status(200).json({ token, userId: user._id });
   } catch (err) {
     return res.status(500).json({ msg: err.message });
   }
@@ -21,4 +44,5 @@ const register = async (req, res) => {
 
 module.exports = {
   register,
+  login,
 };
