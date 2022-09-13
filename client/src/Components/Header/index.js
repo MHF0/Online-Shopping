@@ -4,6 +4,8 @@ import { useNavigate, Link } from "react-router-dom";
 const Header = () => {
   const navigate = useNavigate();
 
+  const token = localStorage.getItem("token");
+
   return (
     <div className="container">
       <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
@@ -21,28 +23,58 @@ const Header = () => {
             </Link>
           </li>
           <li>
-            <Link to="products" class="nav-link px-2 link-dark">
+            <Link to="/products" class="nav-link px-2 link-dark">
               Products
+            </Link>
+          </li>
+          <li>
+            <Link
+              to={token ? "/create-products" : "/login"}
+              class="nav-link px-2 link-dark"
+            >
+              Create Products
+            </Link>
+          </li>
+
+          <li>
+            <Link to="/cart" class="nav-link px-2 link-dark">
+              Cart
             </Link>
           </li>
         </ul>
 
-        <div class="col-md-3 text-end">
-          <button
-            type="button"
-            class="btn btn-outline-primary me-2"
-            onClick={() => navigate("/login")}
-          >
-            Login
-          </button>
-          <button
-            type="button"
-            class="btn btn-outline-primary me-2"
-            onClick={() => navigate("/sign-up")}
-          >
-            Sign-up
-          </button>
-        </div>
+        {token ? (
+          <div class="col-md-3 text-end">
+            <button
+              type="button"
+              class="btn btn-outline-primary me-2"
+              onClick={() => {
+                localStorage.removeItem("token");
+                localStorage.removeItem("userId");
+                navigate("/login");
+              }}
+            >
+              Logout
+            </button>
+          </div>
+        ) : (
+          <div class="col-md-3 text-end">
+            <button
+              type="button"
+              class="btn btn-outline-primary me-2"
+              onClick={() => navigate("/login")}
+            >
+              Login
+            </button>
+            <button
+              type="button"
+              class="btn btn-outline-primary me-2"
+              onClick={() => navigate("/sign-up")}
+            >
+              Sign-up
+            </button>
+          </div>
+        )}
       </header>
     </div>
   );
