@@ -25,11 +25,6 @@ const Header = () => {
               Products
             </Link>
           </li>
-          <li>
-            <Link to="cart" class="nav-link px-2 link-dark">
-              Cart
-            </Link>
-          </li>
         </ul>
 
         <div class="col-md-3 text-end">
