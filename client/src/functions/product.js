@@ -3,7 +3,7 @@ import axios from "axios";
 const token = localStorage.getItem("token");
 
 export const getProducts = async () => {
-  const res = await axios.get(`${process.env.REACT_APP_API}/api/products/all`);
+  const res = await axios.get(`${process.env.REACT_APP_API}/product/all`);
   return res.data;
 };
 
