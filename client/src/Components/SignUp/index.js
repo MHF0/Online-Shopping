@@ -54,6 +54,10 @@ const SignUp = () => {
                 <button type="submit" className="btn btn-primary mt-2">
                   Submit
                 </button>
+
+                <p className="forgot-password text-right mt-3">
+                  Already registered <a href="/login">sign in?</a>
+                </p>
               </div>
             </form>
           </div>
